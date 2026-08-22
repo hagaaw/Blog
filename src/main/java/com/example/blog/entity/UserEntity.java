@@ -1,13 +1,11 @@
 package com.example.blog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="users")
 public class UserEntity {
     @Id
-    @E
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
 }
