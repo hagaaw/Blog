@@ -1,12 +1,19 @@
 package com.example.blog.config;
 
+import com.example.blog.entity.UserEntity;
 import com.example.blog.entity.UserRole;
+import com.example.blog.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private UserRepository userRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http){
         return http
@@ -25,7 +35,7 @@ public class SecurityConfig {
                 })
                 .formLogin(form->{
                     form.loginPage("/login")
-                            .usernameParameter("name")
+                            .usernameParameter("email")
                             .defaultSuccessUrl("/app").permitAll();
                 })
                 .logout(LogoutConfigurer::permitAll)
@@ -37,5 +47,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return username -> {
+            UserEntity user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("not found"));
+            return User.builder()
+                    .username(user.getEmail())
+                    .password(user.getPassword())
+                    .roles(user.getRole().name())
+                    .build();
+            };
+    }
 }
