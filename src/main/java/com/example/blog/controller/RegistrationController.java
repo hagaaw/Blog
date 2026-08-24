@@ -1,6 +1,6 @@
 package com.example.blog.controller;
 
-import com.example.blog.repository.UserRepository;
+
 import com.example.blog.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,7 @@ public class RegistrationController {
             @RequestParam(name = "email") String email,
             @RequestParam(name="password") String password
     ){
-
+        registrationService.saveUser(name, email, password);
+        return "redirect:/login";
     }
 }
