@@ -11,3 +11,24 @@
 .name a:hover{
     font-weight: bold;
 }
+
+.delete input, .redact input{
+    border-radius: 10px;
+}
+
+.redact input{
+    background-color: green;
+}
+
+.delete input{
+    background-color: red;
+}
+
+.buttons{
+    display: flex;
+    gap: 7px
+}
+
+#add form input{
+    font-size: 20px;
+}
