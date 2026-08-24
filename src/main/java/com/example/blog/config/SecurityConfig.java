@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,12 +23,19 @@ public class SecurityConfig {
                             .requestMatchers("/app").hasAnyRole(UserRole.USER.name(),UserRole.ADMIN.name())
                             .anyRequest().permitAll();
                 })
-                .formLogin(login->{
-                    login.loginPage("/login")
+                .formLogin(form->{
+                    form.loginPage("/login")
                             .usernameParameter("name")
                             .defaultSuccessUrl("/app").permitAll();
                 })
                 .logout(LogoutConfigurer::permitAll)
                 .build();
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
 }
