@@ -2,11 +2,13 @@ package com.example.blog.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class MenuController {
+@RequestMapping("/login")
+public class LoginController {
     @GetMapping
-    public String getApp(){
-        return "redirect:/app";
+    public String getLoginPage(){
+        return "login-page";
     }
 }
