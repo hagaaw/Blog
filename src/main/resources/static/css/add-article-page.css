@@ -1,0 +1,12 @@
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    min-height: 100vh;
+}
+
+#title input{
+    width: 278px;
+}

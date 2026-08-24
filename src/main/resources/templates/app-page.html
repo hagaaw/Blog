@@ -16,34 +16,31 @@
 
   <main>
       <section>
-          <div id="list-history">
+          <div id="list-history" th:each="article: ${articles}">
               <div class="history">
                   <div class="name">
                       <a href="">
-                          my first article
+                          <div th:text="${article.getTitle()}"></div>
                       </a>
                   </div>
-                  <div class="date">
-                      August 7, 2024
-                  </div>
-                  <div class="buttons">
-                      <form>
-                          <label class="redact">
-                              <input type="submit" value="">
-                          </label>
-                      </form>
-                      <form>
-                          <label class="delete">
-                              <input type="submit" value="">
-                          </label>
-                      </form>
+                  <div class="other">
+                      <div class="date" th:text="${article.getDateTime().toLocalDate()}">
+                      </div>
+                      <div class="buttons">
+                          <form action="/app/delete/article" method="post">
+                              <input type="hidden" name="id" th:value="${article.getId()}">
+                              <label class="delete">
+                                  <input type="submit" value="">
+                              </label>
+                          </form>
+                      </div>
                   </div>
               </div>
           </div>
       </section>
       <section>
           <div id="add">
-              <form>
+              <form action="/app/add/article">
                   <input type="submit" value="+">
               </form>
           </div>

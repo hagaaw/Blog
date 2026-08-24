@@ -30,13 +30,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(us->{
                     us
-                            .requestMatchers("/app").hasAnyRole(UserRole.USER.name(),UserRole.ADMIN.name())
+                            .requestMatchers("/app/**").hasAnyRole(UserRole.USER.name(),UserRole.ADMIN.name())
                             .anyRequest().permitAll();
                 })
                 .formLogin(form->{
                     form.loginPage("/login")
                             .usernameParameter("email")
-                            .defaultSuccessUrl("/app").permitAll();
+                            .defaultSuccessUrl("/app", true).permitAll();
                 })
                 .logout(LogoutConfigurer::permitAll)
                 .build();
