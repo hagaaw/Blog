@@ -23,12 +23,17 @@ public class ArticleEntity {
     @Column(name="content")
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private UserEntity userEntity;
+
     public ArticleEntity(){}
 
-    public ArticleEntity(String title, LocalDateTime dateTime, String content) {
+    public ArticleEntity(String title, LocalDateTime dateTime, String content, UserEntity userEntity) {
         this.title = title;
         this.dateTime = dateTime;
         this.content = content;
+        this.userEntity = userEntity;
     }
 
     public Long getId() {

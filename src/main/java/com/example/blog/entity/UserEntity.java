@@ -2,6 +2,8 @@ package com.example.blog.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class UserEntity {
@@ -21,6 +23,10 @@ public class UserEntity {
 
     @Column(name="role", nullable = false)
     private UserRole role;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<ArticleEntity> articles;
+
 
     public UserEntity(){}
 

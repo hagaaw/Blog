@@ -5,6 +5,7 @@ import com.example.blog.entity.ArticleEntity;
 import com.example.blog.repository.ArticleRepository;
 import com.example.blog.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+import java.security.Security;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class AppController {
 
     @GetMapping
     public String getApp(Model model){
-        List<ArticleEntity> articleEntities = appService.getAllArticles();
+        List<ArticleEntity> articleEntities = appService.getAllArticlesCurrentUser();
         model.addAttribute("articles", articleEntities);
         return "app-page";
     }
@@ -45,7 +48,7 @@ public class AppController {
             @RequestParam(name = "content", required = false) String content
             )
     {
-        var newArticle = new ArticleEntity(title, LocalDateTime.now(),content);
+        var newArticle = new ArticleEntity(title, LocalDateTime.now(),content, appService.getCurrentUserEntity());
         appService.saveArticle(newArticle);
         return "redirect:/app";
     }
