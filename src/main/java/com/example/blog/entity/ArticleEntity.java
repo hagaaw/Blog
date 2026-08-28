@@ -2,10 +2,13 @@ package com.example.blog.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
-
+@Getter
+@Setter
 @Entity
 @Table(name="articles")
 public class ArticleEntity {
@@ -24,47 +27,16 @@ public class ArticleEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private UserEntity userEntity;
+    @JoinColumn(name="server_id")
+    private ServerEntity server;
 
     public ArticleEntity(){}
 
-    public ArticleEntity(String title, LocalDateTime dateTime, String content, UserEntity userEntity) {
+    public ArticleEntity(String title, LocalDateTime dateTime, String content, ServerEntity server) {
         this.title = title;
         this.dateTime = dateTime;
         this.content = content;
-        this.userEntity = userEntity;
+        this.server = server;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }
