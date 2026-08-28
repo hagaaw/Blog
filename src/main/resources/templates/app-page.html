@@ -26,7 +26,7 @@
                   <div class="other">
                       <div class="date" th:text="${article.getDateTime().toLocalDate()}">
                       </div>
-                      <div class="buttons">
+                      <div class="buttons" th:if="${serverUser.getRole().name() != 'USER'}">
                           <form action="/app/delete/article" method="post">
                               <input type="hidden" name="id" th:value="${article.getId()}">
                               <label class="delete">
@@ -39,8 +39,9 @@
           </div>
       </section>
       <section>
-          <div id="add">
+          <div id="add" th:if="${serverUser.getRole().name() != 'USER'}">
               <form action="/app/add/article">
+                  <input type="hidden" name="user" th:value="${user.getId()}">
                   <input type="submit" value="+">
               </form>
           </div>

@@ -30,6 +30,5 @@ public class RegistrationService {
         userRepository.save(user);
         serverUserRepository.save(new ServerUserEntity
                 (server, user, ServerRole.CREATOR));
-
     }
 }
