@@ -15,6 +15,7 @@
         <label id="content">
           <textarea name="content" rows="5" cols="40" placeholder="Enter content"></textarea>
         </label>
+        <input type="hidden" name="serverId" th:value="${server.getId()}">
         <input type="submit" value="Create article">
       </form>
     </div>

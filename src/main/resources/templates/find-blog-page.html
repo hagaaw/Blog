@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <main>
+    <section>
+      <div id="blogs">
+        <form action="/app">
+          <div class="blog" th:each="user : ${users}">
+            <label>
+              <input type="radio" name="user" th:value="${user.getId()}">
+              <span th:text="${user.getEmail()}"></span>
+
+            </label>
+          </div>
+          <input type="submit">
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
