@@ -1,9 +1,12 @@
 package com.example.blog.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table(name="users")
 public class UserEntity {
@@ -22,10 +25,11 @@ public class UserEntity {
     private String password;
 
     @Column(name="role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<ArticleEntity> articles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ServerUserEntity> serverUserEntities;
 
 
     public UserEntity(){}
@@ -34,46 +38,6 @@ public class UserEntity {
         this.login = login;
         this.email = email;
         this.password = password;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
         this.role = role;
     }
 }
